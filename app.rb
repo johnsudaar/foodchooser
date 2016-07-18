@@ -6,14 +6,17 @@ require 'sinatra'
 LAST_SENT = Time.now()
 PLACES    = ENV["PLACES"].split(",")
 NOTIFIER  = Slack::Notifier.new ENV["SLACK_HOOK"]
+GlobalState = {}
+GlobalState[:last_sent] = Time.now
 
 post '/slack' do
   message = params[:text]
+  STDERR.puts "#{Time.now - GlobalState[:last_sent]}"
 
-  puts "#{Time.now - LAST_SENT}"
-  if message.include? "manger" || (message.include? "non" && Time.now - LAST_SENT < 60 * 5)
+  if (message.include? "manger") || (message.include? "non") && Time.now - GlobalState[:last_sent] < 60 * 5
+    STDERR.puts "Test"
+    GlobalState[:last_sent] = Time.now
     NOTIFIER.ping "Je vous propose d'aller manger chez #{PLACES.sample}"
-    LAST_SENT=Time.now
   end
 end
 
