@@ -14,7 +14,6 @@ post '/slack' do
   STDERR.puts "#{Time.now - GlobalState[:last_sent]}"
 
   if (message.include? ENV["TRIGGER_WORD"]) || (message.include? "non") && Time.now - GlobalState[:last_sent] < 60 * 5
-    STDERR.puts "Test"
     GlobalState[:last_sent] = Time.now
     NOTIFIER.ping "Je vous propose d'aller manger chez #{PLACES.sample}"
   end
