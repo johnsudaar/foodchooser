@@ -27,7 +27,7 @@ bundle install
 
 The app is in two part:
 
-## The sinatra app
+## The sinatra app
 
 This app should manage slack incomming and outgoing webhooks. It has a single endpoint: `POST /slack`
 
@@ -37,7 +37,7 @@ You can launch it with:
 ruby app.rb
 ```
 
-## The clock
+## The clock
 
 This clock is responsible for sending daily notifications.
 You can launch it with:
